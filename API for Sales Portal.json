@@ -1,0 +1,3369 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "API for Sales Portal",
+    "version" : "0.11",
+    "title" : "Sales Portal"
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/w46/sportal_draft/0.09",
+  "tags" : [ {
+    "name" : "accountmanagers",
+    "description" : "Operations pertaining to FAs/APs/ISs"
+  }, {
+    "name" : "parties",
+    "description" : "Operations pertaining to Clients"
+  }, {
+    "name" : "contracts",
+    "description" : "Operations pertaining to Policies"
+  }, {
+    "name" : "email",
+    "description" : "Operations pertaining to Email"
+  }, {
+    "name" : "webusers",
+    "description" : "Operations pertaining to Sales Portal Users"
+  } ],
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/accountmanagers" : {
+      "get" : {
+        "tags" : [ "accountmanagers" ],
+        "description" : "Returns a list of FAs/APs/IS",
+        "parameters" : [ {
+          "name" : "branchId",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "BMABC"
+        }, {
+          "name" : "firstName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Juan"
+        }, {
+          "name" : "lastName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Dela Cruz"
+        }, {
+          "name" : "agentNumberOfAdvisorOfAccountManager",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "8008000"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned a list of FAs/APs/IS",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "globalId" : {
+                    "type" : "string",
+                    "example" : "2018.1220.4431"
+                  },
+                  "self" : {
+                    "type" : "string",
+                    "example" : "2018.1220.1001"
+                  },
+                  "firstName" : {
+                    "type" : "string",
+                    "example" : "Juan"
+                  },
+                  "middleName" : {
+                    "type" : "string",
+                    "example" : "Lopez"
+                  },
+                  "lastName" : {
+                    "type" : "string",
+                    "example" : "Dela Cruz"
+                  },
+                  "agentNumber" : {
+                    "type" : "string",
+                    "example" : "7000551"
+                  },
+                  "employmentStatus" : {
+                    "type" : "string",
+                    "example" : "Active"
+                  },
+                  "employmentDate" : {
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "branchList" : {
+                    "type" : "object",
+                    "example" : {
+                      "BMABC" : "MAKATI-ALLIED BANK CENTER"
+                    },
+                    "properties" : { }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/accountmanagers/{accountManagerId}" : {
+      "get" : {
+        "tags" : [ "accountmanagers" ],
+        "description" : "Returns the details of the selected FA/AP/IS",
+        "parameters" : [ {
+          "name" : "accountManagerId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "7000123"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned the details of the selected FA/AP/IS",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "globalId" : {
+                  "type" : "string",
+                  "example" : "2018.1220.1223"
+                },
+                "self" : {
+                  "type" : "string",
+                  "example" : "2018.1220.1002"
+                },
+                "accountManagerType" : {
+                  "type" : "string",
+                  "example" : "Agency"
+                },
+                "firstName" : {
+                  "type" : "string",
+                  "example" : "Joana Marie"
+                },
+                "middleName" : {
+                  "type" : "string",
+                  "example" : "Valdez"
+                },
+                "lastName" : {
+                  "type" : "string",
+                  "example" : "Gutierrez"
+                },
+                "birthDate" : {
+                  "type" : "string",
+                  "format" : "date-time"
+                },
+                "maritalStatus" : {
+                  "type" : "string",
+                  "example" : "Married"
+                },
+                "accountManagerGender" : {
+                  "type" : "string",
+                  "example" : "Female"
+                },
+                "nationality" : {
+                  "type" : "string",
+                  "example" : "Filipino"
+                },
+                "address" : {
+                  "$ref" : "#/definitions/inline_response_200_1_address"
+                },
+                "countryPrefix" : {
+                  "type" : "string",
+                  "example" : "63"
+                },
+                "prefix" : {
+                  "type" : "string",
+                  "example" : "2"
+                },
+                "phoneNumber" : {
+                  "type" : "string",
+                  "example" : "8811143"
+                },
+                "email" : {
+                  "type" : "string",
+                  "example" : "joanamarie.gutierrez@allianzpnblife.ph"
+                },
+                "agentNumber" : {
+                  "type" : "string",
+                  "example" : "7000123"
+                },
+                "roleNameOfAccountManager" : {
+                  "type" : "string",
+                  "example" : "Agency Leader"
+                },
+                "employmentStatus" : {
+                  "type" : "string",
+                  "example" : "Active"
+                },
+                "employmentDate" : {
+                  "type" : "string",
+                  "format" : "date-time"
+                },
+                "branchList" : {
+                  "type" : "object",
+                  "example" : {
+                    "BMABC" : "MAKATI-ALLIED BANK CENTER"
+                  },
+                  "properties" : { }
+                },
+                "certificateNumber" : {
+                  "type" : "string",
+                  "example" : "1234433222"
+                },
+                "certificateStatus" : {
+                  "type" : "string",
+                  "example" : "Active"
+                },
+                "agreementValidity" : {
+                  "$ref" : "#/definitions/Interval"
+                },
+                "additionalInformation" : {
+                  "type" : "string",
+                  "example" : "This is an additional information."
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/parties" : {
+      "get" : {
+        "tags" : [ "parties" ],
+        "description" : "Returns a list of clients assigned to the FA/AP/IS",
+        "parameters" : [ {
+          "name" : "birthDateFrom",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "format" : "date",
+          "x-example" : "1989-12-21"
+        }, {
+          "name" : "birthDateTo",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "format" : "date",
+          "x-example" : "2000-12-21"
+        }, {
+          "name" : "branchId",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "BMABC"
+        }, {
+          "name" : "contractHolderFirstName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Peter"
+        }, {
+          "name" : "contractHolderLastName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Hemsworth"
+        }, {
+          "name" : "insuredFirstName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "John"
+        }, {
+          "name" : "insuredLastName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Hemsworth"
+        }, {
+          "name" : "agentNumber",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "7000123"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned a list of clients assigned to the FA/AP/IS",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "globalId" : {
+                    "type" : "string",
+                    "example" : "2018.1220.1233"
+                  },
+                  "self" : {
+                    "type" : "string",
+                    "example" : "2018.1220.1003"
+                  },
+                  "firstName" : {
+                    "type" : "string",
+                    "example" : "John"
+                  },
+                  "middleName" : {
+                    "type" : "string",
+                    "example" : "Doe"
+                  },
+                  "lastName" : {
+                    "type" : "string",
+                    "example" : "Smith"
+                  },
+                  "birthDate" : {
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "address" : {
+                    "$ref" : "#/definitions/parties_address"
+                  },
+                  "countryPrefix" : {
+                    "type" : "string",
+                    "example" : "63"
+                  },
+                  "prefix" : {
+                    "type" : "string",
+                    "example" : "2"
+                  },
+                  "phoneNumber" : {
+                    "type" : "string",
+                    "example" : "4445321"
+                  },
+                  "email" : {
+                    "type" : "string",
+                    "example" : "john.smith@allianzpnblife.ph"
+                  },
+                  "agentNumber" : {
+                    "type" : "string",
+                    "example" : "450009"
+                  },
+                  "agentNumberOfAdvisorOfAccountManager" : {
+                    "type" : "string",
+                    "example" : "550009"
+                  },
+                  "accountManager" : {
+                    "$ref" : "#/definitions/Agent"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/parties/{partyId}" : {
+      "get" : {
+        "tags" : [ "parties" ],
+        "description" : "Returns the details of a particular client assigned to the FA/AP/IS",
+        "parameters" : [ {
+          "name" : "partyId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "2018.1220.1004"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned the details of a specific client assigned to the FA/AP/IS",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "globalId" : {
+                  "type" : "string",
+                  "example" : "2018.1220.2133"
+                },
+                "self" : {
+                  "type" : "string",
+                  "example" : "2018.1220.1004"
+                },
+                "personalTitles" : {
+                  "type" : "string",
+                  "example" : "Ms."
+                },
+                "firstName" : {
+                  "type" : "string",
+                  "example" : "Hazel Anne"
+                },
+                "middleName" : {
+                  "type" : "string",
+                  "example" : "Marion"
+                },
+                "lastName" : {
+                  "type" : "string",
+                  "example" : "Smith"
+                },
+                "companyName" : {
+                  "type" : "string",
+                  "example" : "Allianz"
+                },
+                "birthName" : {
+                  "type" : "string",
+                  "example" : "Hazel Anne"
+                },
+                "birthDate" : {
+                  "type" : "string",
+                  "format" : "date-time"
+                },
+                "maritalStatus" : {
+                  "type" : "string",
+                  "example" : "Single"
+                },
+                "gender" : {
+                  "type" : "string",
+                  "example" : "Female"
+                },
+                "nationality" : {
+                  "type" : "string",
+                  "example" : "Filipino"
+                },
+                "address" : {
+                  "$ref" : "#/definitions/Address"
+                },
+                "contract" : {
+                  "$ref" : "#/definitions/inline_response_200_3_contract"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/parties/{partyId}/contracts" : {
+      "get" : {
+        "tags" : [ "parties" ],
+        "description" : "Returns the contract list of the selected client assigned to the FA/AP/IS",
+        "parameters" : [ {
+          "name" : "partyId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "2018.1220.1005"
+        }, {
+          "name" : "agentNumber",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "7000123"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned the contract list of the selected client assigned to the FA/AP/IS",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "globalId" : {
+                    "type" : "string",
+                    "example" : "2018.1220.1334"
+                  },
+                  "self" : {
+                    "type" : "string",
+                    "example" : "2018.1220.1005"
+                  },
+                  "contractNumber" : {
+                    "type" : "string",
+                    "example" : "10000944"
+                  },
+                  "currency" : {
+                    "type" : "string",
+                    "example" : "USD"
+                  },
+                  "inceptionDate" : {
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "contractInterval" : {
+                    "$ref" : "#/definitions/partiespartyIdcontracts_contractInterval"
+                  },
+                  "branchName" : {
+                    "type" : "string",
+                    "example" : "Allianz PNB Life"
+                  },
+                  "productOfferingName" : {
+                    "type" : "string",
+                    "example" : "TR_BIDA_10_PHP_NG_AGENCY"
+                  },
+                  "paymentFrequency" : {
+                    "type" : "string",
+                    "example" : "Annual"
+                  },
+                  "coverages" : {
+                    "$ref" : "#/definitions/partiespartyIdcontracts_coverages"
+                  },
+                  "status" : {
+                    "type" : "string",
+                    "example" : "Active"
+                  },
+                  "insured" : {
+                    "$ref" : "#/definitions/Insured"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/contracts" : {
+      "get" : {
+        "tags" : [ "contracts" ],
+        "description" : "Returns a list of policies assigned to the FA/AP/IS",
+        "parameters" : [ {
+          "name" : "status",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Active"
+        }, {
+          "name" : "branchId",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "BPABC"
+        }, {
+          "name" : "contractNumber",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "10000944"
+        }, {
+          "name" : "insuredFirstName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Exra"
+        }, {
+          "name" : "insuredLastName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Johanson"
+        }, {
+          "name" : "contractHolderFirstName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Janine"
+        }, {
+          "name" : "contractHolderName",
+          "in" : "query",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "Griffin"
+        }, {
+          "name" : "agentNumber",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "7000123"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned a list of policies assigned to the FA/AP/IS",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "globalId" : {
+                    "type" : "string",
+                    "example" : "2018.1220.1456"
+                  },
+                  "self" : {
+                    "type" : "string",
+                    "example" : "2018.1220.1007"
+                  },
+                  "contractNumber" : {
+                    "type" : "string",
+                    "example" : "10000944"
+                  },
+                  "currency" : {
+                    "type" : "string",
+                    "example" : "USD"
+                  },
+                  "inceptionDate" : {
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "contractInterval" : {
+                    "$ref" : "#/definitions/partiespartyIdcontracts_contractInterval"
+                  },
+                  "branchName" : {
+                    "type" : "string",
+                    "example" : "Allianz PNB Life"
+                  },
+                  "productOfferingName" : {
+                    "type" : "string",
+                    "example" : "TR_BIDA_10_PHP_NG_AGENCY"
+                  },
+                  "paymentFrequency" : {
+                    "type" : "string",
+                    "example" : "Annual"
+                  },
+                  "coverages" : {
+                    "$ref" : "#/definitions/partiespartyIdcontracts_coverages"
+                  },
+                  "status" : {
+                    "type" : "string",
+                    "example" : "Active"
+                  },
+                  "insured" : {
+                    "$ref" : "#/definitions/Insured"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/contracts/{contractId}" : {
+      "get" : {
+        "tags" : [ "contracts" ],
+        "description" : "Returns the details of a selected contract",
+        "parameters" : [ {
+          "name" : "contractId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "10000888"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned the details of a selected contract",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "globalId" : {
+                  "type" : "string",
+                  "example" : "2018.1221.1456"
+                },
+                "self" : {
+                  "type" : "string",
+                  "example" : "2018.1221.1008"
+                },
+                "contractNumber" : {
+                  "type" : "string",
+                  "example" : "10000888"
+                },
+                "currency" : {
+                  "type" : "string",
+                  "example" : "PHP"
+                },
+                "inceptionDate" : {
+                  "type" : "string",
+                  "format" : "date-time"
+                },
+                "contractInterval" : {
+                  "$ref" : "#/definitions/Interval"
+                },
+                "purchaseDate" : {
+                  "type" : "string",
+                  "format" : "date-time"
+                },
+                "branchName" : {
+                  "type" : "string",
+                  "example" : "Allianz PNB Life"
+                },
+                "productOfferingName" : {
+                  "type" : "string",
+                  "example" : "AP_HERO_100_PHP_NG_AGENCY"
+                },
+                "contractType" : {
+                  "type" : "string",
+                  "example" : "Regular Pay"
+                },
+                "paymentFrequency" : {
+                  "type" : "string",
+                  "example" : "Monthly"
+                },
+                "netPremium" : {
+                  "type" : "number",
+                  "format" : "double",
+                  "example" : 8000.0
+                },
+                "insuranceSum" : {
+                  "type" : "number",
+                  "format" : "double",
+                  "example" : 80000.0
+                },
+                "paymentDuration" : {
+                  "type" : "string",
+                  "format" : "period",
+                  "example" : "72M"
+                },
+                "effectiveDate" : {
+                  "type" : "string",
+                  "format" : "date-time"
+                },
+                "status" : {
+                  "type" : "string",
+                  "example" : "Inforce"
+                },
+                "annualPremium" : {
+                  "type" : "number",
+                  "format" : "double",
+                  "example" : 9000.0
+                },
+                "paymentMode" : {
+                  "type" : "string",
+                  "example" : "Credit Card"
+                },
+                "dividendPaymentMethod" : {
+                  "type" : "string",
+                  "example" : "Cash"
+                },
+                "insured" : {
+                  "$ref" : "#/definitions/inline_response_200_6_insured"
+                },
+                "contractHolder" : {
+                  "$ref" : "#/definitions/inline_response_200_6_contractHolder"
+                },
+                "lifeDetails" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/definitions/inline_response_200_6_lifeDetails"
+                  }
+                },
+                "dividends" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/definitions/inline_response_200_6_dividends"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/contracts/{contractId}/coverages" : {
+      "get" : {
+        "tags" : [ "contracts" ],
+        "description" : "Returns the coverage and rider details of a selected contract",
+        "parameters" : [ {
+          "name" : "contractId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "10000888"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned the coverage and rider details of a selected contract",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "self" : {
+                    "type" : "string",
+                    "example" : "1"
+                  },
+                  "name" : {
+                    "type" : "string",
+                    "example" : "Accidental Death & Dismemberment"
+                  },
+                  "paymentDuration" : {
+                    "type" : "string",
+                    "format" : "period",
+                    "example" : "72M"
+                  },
+                  "status" : {
+                    "type" : "string",
+                    "example" : "Active"
+                  },
+                  "statusDate" : {
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "insuranceSum" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 10000.0
+                  },
+                  "technicalPrice" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 10000.0
+                  },
+                  "coverageInterval" : {
+                    "$ref" : "#/definitions/contractscontractIdcoverages_coverageInterval"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/contracts/{contractId}/benefitsentitlements" : {
+      "get" : {
+        "tags" : [ "contracts" ],
+        "description" : "Returns the beneficiaries of a selected contract",
+        "parameters" : [ {
+          "name" : "contractId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "10000888"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned the beneficiaries of a selected contract",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "globalId" : {
+                    "type" : "string",
+                    "example" : "2018.1221.5922"
+                  },
+                  "self" : {
+                    "type" : "string",
+                    "example" : "2018.1221.1013"
+                  },
+                  "firstName" : {
+                    "type" : "string",
+                    "example" : "Kristoff"
+                  },
+                  "middleName" : {
+                    "type" : "string",
+                    "example" : "Legarda"
+                  },
+                  "lastName" : {
+                    "type" : "string",
+                    "example" : "Quirino"
+                  },
+                  "birthDate" : {
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "relationship" : {
+                    "type" : "object",
+                    "example" : "Brother",
+                    "properties" : { }
+                  },
+                  "priorityLevel" : {
+                    "type" : "object",
+                    "example" : "Primary",
+                    "properties" : { }
+                  },
+                  "isRevocable" : {
+                    "type" : "boolean",
+                    "example" : true
+                  },
+                  "percentShare" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 50.0
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/contracts/{contractId}/loans" : {
+      "get" : {
+        "tags" : [ "contracts" ],
+        "description" : "Returns the loan details of a selected contract",
+        "parameters" : [ {
+          "name" : "contractId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "10000888"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned the loan details of a selected contract",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "self" : {
+                    "type" : "string",
+                    "example" : "1"
+                  },
+                  "loanAmount" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 10000.0
+                  },
+                  "outstandingAmount" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 100000.0
+                  },
+                  "tenure" : {
+                    "type" : "integer",
+                    "example" : 10
+                  },
+                  "basicAmount" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 8000.0
+                  },
+                  "interestAmount" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 2000.0
+                  },
+                  "lender" : {
+                    "type" : "string",
+                    "example" : "Description of Policy Loan Origin"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/contracts/{contractId}/endowments" : {
+      "get" : {
+        "tags" : [ "contracts" ],
+        "description" : "Returns the endowment details of a selected contract",
+        "parameters" : [ {
+          "name" : "contractId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "10000888"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned the endowment details of a selected contract",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "self" : {
+                    "type" : "string",
+                    "example" : "1"
+                  },
+                  "bankName" : {
+                    "type" : "string",
+                    "example" : "PNB"
+                  },
+                  "bankAccountType" : {
+                    "type" : "string",
+                    "example" : "SA"
+                  },
+                  "amount" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 100000.0
+                  },
+                  "endowmentDate" : {
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "endowmentStatus" : {
+                    "type" : "string",
+                    "example" : "Active"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/contracts/{contractId}/funds" : {
+      "get" : {
+        "tags" : [ "contracts" ],
+        "description" : "Returns the fund details of a selected contract",
+        "parameters" : [ {
+          "name" : "contractId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "10000888"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned the fund details of a selected contract",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "self" : {
+                    "type" : "string",
+                    "example" : "1"
+                  },
+                  "description" : {
+                    "type" : "string",
+                    "example" : "Funds"
+                  },
+                  "numberOfShares" : {
+                    "type" : "integer",
+                    "example" : 30
+                  },
+                  "fundPrice" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 100000.0
+                  },
+                  "currentValue" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 40000.0
+                  },
+                  "percentage" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 30.0
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/contracts/{contractId}/funds/{fundId}/fundtransactions" : {
+      "get" : {
+        "tags" : [ "contracts" ],
+        "description" : "Returns the fund transaction details of a selected contract",
+        "parameters" : [ {
+          "name" : "contractId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "10000888"
+        }, {
+          "name" : "fundId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "12908"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned the fund transaction details of a selected contract",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "self" : {
+                    "type" : "string",
+                    "example" : "1"
+                  },
+                  "transactionExecutionDate" : {
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "transactionOrderDate" : {
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "transactionNumber" : {
+                    "type" : "string",
+                    "example" : "10003322"
+                  },
+                  "transactionType" : {
+                    "type" : "string",
+                    "example" : "Topup"
+                  },
+                  "transactionAmount" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 12000.0
+                  },
+                  "fundPrice" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 12000.0
+                  },
+                  "fundShares" : {
+                    "type" : "integer",
+                    "example" : 2
+                  },
+                  "balance" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 2000.0
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/contracts/{contractId}/paymenttransactions" : {
+      "get" : {
+        "tags" : [ "contracts" ],
+        "description" : "Returns the billing and payment details of a selected contract",
+        "parameters" : [ {
+          "name" : "contractId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "10000888"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned the billing and payment details of a selected contract",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "self" : {
+                    "type" : "string",
+                    "example" : "1"
+                  },
+                  "orderNumber" : {
+                    "type" : "string",
+                    "example" : "1"
+                  },
+                  "dueDate" : {
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "paymentMode" : {
+                    "type" : "string",
+                    "example" : "Credit Card"
+                  },
+                  "referenceNumber" : {
+                    "type" : "string",
+                    "example" : "149812"
+                  },
+                  "paidDate" : {
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "paidAmount" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 1000.0
+                  },
+                  "accountingDate" : {
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "amount" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 2000.0
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/contracts/{contractId}/claims" : {
+      "get" : {
+        "tags" : [ "contracts" ],
+        "description" : "Returns the claim details of a selected contract",
+        "parameters" : [ {
+          "name" : "contractId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "10000888"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned the claim details of a selected contract",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "self" : {
+                    "type" : "string",
+                    "example" : "1"
+                  },
+                  "contractNumber" : {
+                    "type" : "string",
+                    "example" : "1999940"
+                  },
+                  "claimNumber" : {
+                    "type" : "string",
+                    "example" : "1009449"
+                  },
+                  "creationDateTime" : {
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "claimStatus" : {
+                    "type" : "string",
+                    "example" : "Claimed"
+                  },
+                  "refundAmount" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 40000.0
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/contracts/{contractId}/endorsements" : {
+      "get" : {
+        "tags" : [ "contracts" ],
+        "description" : "Returns the endorsement details of a selected contract",
+        "parameters" : [ {
+          "name" : "contractId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "10000888"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned the endorsement details of a selected contract",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "self" : {
+                    "type" : "string",
+                    "example" : "1"
+                  },
+                  "orderNumber" : {
+                    "type" : "integer",
+                    "example" : 1
+                  },
+                  "type" : {
+                    "type" : "string",
+                    "example" : "Endorsement"
+                  },
+                  "inceptionDate" : {
+                    "type" : "string",
+                    "format" : "date-time"
+                  },
+                  "state" : {
+                    "type" : "string",
+                    "example" : "Active"
+                  },
+                  "userRemarks" : {
+                    "type" : "string",
+                    "example" : "User Remarks"
+                  },
+                  "systemRemarks" : {
+                    "type" : "string",
+                    "example" : "System Remarks"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/contracts/{contractId}/reinstatements" : {
+      "get" : {
+        "tags" : [ "contracts" ],
+        "description" : "Returns the reinstatement details of a selected contract",
+        "parameters" : [ {
+          "name" : "contractId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "10000888"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned the reinstatement details of a selected contract",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" : {
+                  "self" : {
+                    "type" : "string",
+                    "example" : "1"
+                  },
+                  "transactionNumber" : {
+                    "type" : "string",
+                    "example" : "789110001"
+                  },
+                  "reinstatementOption" : {
+                    "type" : "string",
+                    "example" : "Option"
+                  },
+                  "status" : {
+                    "type" : "string",
+                    "example" : "Active"
+                  },
+                  "validityInterval" : {
+                    "$ref" : "#/definitions/Interval"
+                  },
+                  "amount" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 19999.0
+                  },
+                  "balance" : {
+                    "type" : "number",
+                    "format" : "double",
+                    "example" : 10000.0
+                  },
+                  "reinstatementRequirements" : {
+                    "type" : "object",
+                    "example" : { },
+                    "properties" : { }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/email" : {
+      "post" : {
+        "tags" : [ "email" ],
+        "description" : "Test",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/body"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Test",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "message" : {
+                  "type" : "string"
+                },
+                "creationDateTime" : {
+                  "type" : "string",
+                  "format" : "date-time"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/webusers/{webuserId}" : {
+      "get" : {
+        "tags" : [ "webusers" ],
+        "description" : "Returns the details of a specified user",
+        "parameters" : [ {
+          "name" : "webuserId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "john.manuel"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully returned the details of a specified user",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "globalId" : {
+                  "type" : "string",
+                  "example" : "2018.1221.1254"
+                },
+                "self" : {
+                  "type" : "string",
+                  "example" : "2018.1221.1014"
+                },
+                "loggedInUserId" : {
+                  "type" : "string",
+                  "example" : "john.manuel"
+                },
+                "firstName" : {
+                  "type" : "string",
+                  "example" : "John"
+                },
+                "lastName" : {
+                  "type" : "string",
+                  "example" : "Manuel"
+                },
+                "accountManager" : {
+                  "$ref" : "#/definitions/inline_response_200_18_accountManager"
+                },
+                "countryPrefix" : {
+                  "type" : "string",
+                  "example" : "63"
+                },
+                "prefix" : {
+                  "type" : "string",
+                  "example" : "2"
+                },
+                "phoneNumber" : {
+                  "type" : "string",
+                  "example" : "8185433"
+                },
+                "email" : {
+                  "type" : "string",
+                  "example" : "john.manuel@allianzpnblife.ph"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Address" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "buildingName" : {
+          "type" : "string",
+          "example" : "Ayala Tower"
+        },
+        "floorNumber" : {
+          "type" : "string",
+          "example" : "12"
+        },
+        "street" : {
+          "type" : "string",
+          "example" : "Dela Rosa St."
+        },
+        "district" : {
+          "type" : "string",
+          "example" : "San Lorenzo"
+        },
+        "city" : {
+          "type" : "string",
+          "example" : "Makati City"
+        },
+        "state" : {
+          "type" : "string",
+          "example" : "Metro Manila"
+        },
+        "countryCode" : {
+          "type" : "string",
+          "example" : "63"
+        },
+        "zipCode" : {
+          "type" : "string",
+          "example" : "1200"
+        }
+      }
+    },
+    "Addresses" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/definitions/Addresses_inner"
+      },
+      "example" : [ {
+        "self" : "11",
+        "type" : "Work",
+        "isPreferredBilling" : false,
+        "isPreferredMailing" : false,
+        "buildingName" : "Ayala Tower",
+        "floorNumber" : "12",
+        "street" : "Dela Rosa St.",
+        "district" : "San Lorenzo",
+        "city" : "Makati City",
+        "state" : "Metro Manila",
+        "countryCode" : "63",
+        "zipCode" : "1200"
+      }, {
+        "self" : "12",
+        "type" : "Home",
+        "isPreferredBilling" : true,
+        "isPreferredMailing" : true,
+        "buildingName" : "Ayala Tower",
+        "floorNumber" : "24",
+        "street" : "Dela Rosa St.",
+        "district" : "San Lorenzo",
+        "city" : "Makati City",
+        "state" : "Metro Manila",
+        "countryCode" : "63",
+        "zipCode" : "1200"
+      } ]
+    },
+    "Agent" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1220.1234"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1220.2001"
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "Peter"
+        },
+        "middleName" : {
+          "type" : "string",
+          "example" : "Lucas"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Hemsworth"
+        },
+        "agentNumber" : {
+          "type" : "string",
+          "example" : "5677111"
+        },
+        "agentNumberOfAdvisorOfAccountManager" : {
+          "type" : "string",
+          "example" : "9009000"
+        },
+        "advisor" : {
+          "$ref" : "#/definitions/Agent_advisor"
+        },
+        "webuser" : {
+          "$ref" : "#/definitions/Agent_webuser"
+        }
+      }
+    },
+    "Coverages" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "insuranceSum" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 50000.0
+        },
+        "status" : {
+          "type" : "string",
+          "example" : "Active"
+        }
+      }
+    },
+    "Insured" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1220.1222"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1220.2001"
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "Ezra"
+        },
+        "middleName" : {
+          "type" : "string",
+          "example" : "Scarlet"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Johanson"
+        }
+      }
+    },
+    "ContractHolder" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1220.1443"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1220.2002"
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "Janine"
+        },
+        "middleName" : {
+          "type" : "string",
+          "example" : "Stanford"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Griffin"
+        }
+      }
+    },
+    "Interval" : {
+      "properties" : {
+        "startDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "endDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "Error" : {
+      "required" : [ "code", "message" ],
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32",
+          "example" : 0
+        },
+        "message" : {
+          "type" : "string",
+          "example" : "This is a sample error message."
+        }
+      }
+    },
+    "inline_response_200" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1220.4431"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1220.1001"
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "Juan"
+        },
+        "middleName" : {
+          "type" : "string",
+          "example" : "Lopez"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Dela Cruz"
+        },
+        "agentNumber" : {
+          "type" : "string",
+          "example" : "7000551"
+        },
+        "employmentStatus" : {
+          "type" : "string",
+          "example" : "Active"
+        },
+        "employmentDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "branchList" : {
+          "type" : "object",
+          "example" : {
+            "BMABC" : "MAKATI-ALLIED BANK CENTER"
+          },
+          "properties" : { }
+        }
+      }
+    },
+    "inline_response_200_1_address" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "buildingName" : {
+          "type" : "string",
+          "example" : "Ayala Tower"
+        },
+        "floorNumber" : {
+          "type" : "string",
+          "example" : "12"
+        },
+        "street" : {
+          "type" : "string",
+          "example" : "Dela Rosa St."
+        },
+        "district" : {
+          "type" : "string",
+          "example" : "Brgy. 431"
+        },
+        "city" : {
+          "type" : "string",
+          "example" : "Makati City"
+        },
+        "state" : {
+          "type" : "string",
+          "example" : "Metro Manila"
+        },
+        "countryCode" : {
+          "type" : "string",
+          "example" : "63"
+        },
+        "zipCode" : {
+          "type" : "string",
+          "example" : "1200"
+        },
+        "validityInterval" : {
+          "$ref" : "#/definitions/Interval"
+        }
+      }
+    },
+    "inline_response_200_1" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1220.1223"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1220.1002"
+        },
+        "accountManagerType" : {
+          "type" : "string",
+          "example" : "Agency"
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "Joana Marie"
+        },
+        "middleName" : {
+          "type" : "string",
+          "example" : "Valdez"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Gutierrez"
+        },
+        "birthDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "maritalStatus" : {
+          "type" : "string",
+          "example" : "Married"
+        },
+        "accountManagerGender" : {
+          "type" : "string",
+          "example" : "Female"
+        },
+        "nationality" : {
+          "type" : "string",
+          "example" : "Filipino"
+        },
+        "address" : {
+          "$ref" : "#/definitions/inline_response_200_1_address"
+        },
+        "countryPrefix" : {
+          "type" : "string",
+          "example" : "63"
+        },
+        "prefix" : {
+          "type" : "string",
+          "example" : "2"
+        },
+        "phoneNumber" : {
+          "type" : "string",
+          "example" : "8811143"
+        },
+        "email" : {
+          "type" : "string",
+          "example" : "joanamarie.gutierrez@allianzpnblife.ph"
+        },
+        "agentNumber" : {
+          "type" : "string",
+          "example" : "7000123"
+        },
+        "roleNameOfAccountManager" : {
+          "type" : "string",
+          "example" : "Agency Leader"
+        },
+        "employmentStatus" : {
+          "type" : "string",
+          "example" : "Active"
+        },
+        "employmentDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "branchList" : {
+          "type" : "object",
+          "example" : {
+            "BMABC" : "MAKATI-ALLIED BANK CENTER"
+          },
+          "properties" : { }
+        },
+        "certificateNumber" : {
+          "type" : "string",
+          "example" : "1234433222"
+        },
+        "certificateStatus" : {
+          "type" : "string",
+          "example" : "Active"
+        },
+        "agreementValidity" : {
+          "$ref" : "#/definitions/Interval"
+        },
+        "additionalInformation" : {
+          "type" : "string",
+          "example" : "This is an additional information."
+        }
+      }
+    },
+    "parties_address" : {
+      "properties" : {
+        "city" : {
+          "type" : "string",
+          "example" : "Makati City"
+        },
+        "state" : {
+          "type" : "string",
+          "example" : "Metro Manila"
+        },
+        "countryCode" : {
+          "type" : "string",
+          "example" : "63"
+        }
+      }
+    },
+    "inline_response_200_2" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1220.1233"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1220.1003"
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "John"
+        },
+        "middleName" : {
+          "type" : "string",
+          "example" : "Doe"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Smith"
+        },
+        "birthDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "address" : {
+          "$ref" : "#/definitions/parties_address"
+        },
+        "countryPrefix" : {
+          "type" : "string",
+          "example" : "63"
+        },
+        "prefix" : {
+          "type" : "string",
+          "example" : "2"
+        },
+        "phoneNumber" : {
+          "type" : "string",
+          "example" : "4445321"
+        },
+        "email" : {
+          "type" : "string",
+          "example" : "john.smith@allianzpnblife.ph"
+        },
+        "agentNumber" : {
+          "type" : "string",
+          "example" : "450009"
+        },
+        "agentNumberOfAdvisorOfAccountManager" : {
+          "type" : "string",
+          "example" : "550009"
+        },
+        "accountManager" : {
+          "$ref" : "#/definitions/Agent"
+        }
+      }
+    },
+    "inline_response_200_3_contract" : {
+      "properties" : {
+        "inceptionDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "inline_response_200_3" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1220.2133"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1220.1004"
+        },
+        "personalTitles" : {
+          "type" : "string",
+          "example" : "Ms."
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "Hazel Anne"
+        },
+        "middleName" : {
+          "type" : "string",
+          "example" : "Marion"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Smith"
+        },
+        "companyName" : {
+          "type" : "string",
+          "example" : "Allianz"
+        },
+        "birthName" : {
+          "type" : "string",
+          "example" : "Hazel Anne"
+        },
+        "birthDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "maritalStatus" : {
+          "type" : "string",
+          "example" : "Single"
+        },
+        "gender" : {
+          "type" : "string",
+          "example" : "Female"
+        },
+        "nationality" : {
+          "type" : "string",
+          "example" : "Filipino"
+        },
+        "address" : {
+          "$ref" : "#/definitions/Address"
+        },
+        "contract" : {
+          "$ref" : "#/definitions/inline_response_200_3_contract"
+        }
+      }
+    },
+    "partiespartyIdcontracts_contractInterval" : {
+      "properties" : {
+        "endTimeDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "partiespartyIdcontracts_coverages" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "300"
+        },
+        "insuranceSum" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 100000.0
+        }
+      }
+    },
+    "inline_response_200_4" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1220.1334"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1220.1005"
+        },
+        "contractNumber" : {
+          "type" : "string",
+          "example" : "10000944"
+        },
+        "currency" : {
+          "type" : "string",
+          "example" : "USD"
+        },
+        "inceptionDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "contractInterval" : {
+          "$ref" : "#/definitions/partiespartyIdcontracts_contractInterval"
+        },
+        "branchName" : {
+          "type" : "string",
+          "example" : "Allianz PNB Life"
+        },
+        "productOfferingName" : {
+          "type" : "string",
+          "example" : "TR_BIDA_10_PHP_NG_AGENCY"
+        },
+        "paymentFrequency" : {
+          "type" : "string",
+          "example" : "Annual"
+        },
+        "coverages" : {
+          "$ref" : "#/definitions/partiespartyIdcontracts_coverages"
+        },
+        "status" : {
+          "type" : "string",
+          "example" : "Active"
+        },
+        "insured" : {
+          "$ref" : "#/definitions/Insured"
+        }
+      }
+    },
+    "inline_response_200_5" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1220.1456"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1220.1007"
+        },
+        "contractNumber" : {
+          "type" : "string",
+          "example" : "10000944"
+        },
+        "currency" : {
+          "type" : "string",
+          "example" : "USD"
+        },
+        "inceptionDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "contractInterval" : {
+          "$ref" : "#/definitions/partiespartyIdcontracts_contractInterval"
+        },
+        "branchName" : {
+          "type" : "string",
+          "example" : "Allianz PNB Life"
+        },
+        "productOfferingName" : {
+          "type" : "string",
+          "example" : "TR_BIDA_10_PHP_NG_AGENCY"
+        },
+        "paymentFrequency" : {
+          "type" : "string",
+          "example" : "Annual"
+        },
+        "coverages" : {
+          "$ref" : "#/definitions/partiespartyIdcontracts_coverages"
+        },
+        "status" : {
+          "type" : "string",
+          "example" : "Active"
+        },
+        "insured" : {
+          "$ref" : "#/definitions/Insured"
+        }
+      }
+    },
+    "inline_response_200_6_insured" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1221.1466"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1221.1009"
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "Jenny"
+        },
+        "middleName" : {
+          "type" : "string",
+          "example" : "Acosta"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Cruz"
+        },
+        "birthDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "nationality" : {
+          "type" : "string",
+          "example" : "Filipino"
+        },
+        "occupation" : {
+          "type" : "string",
+          "example" : "Entertainment - Musician"
+        },
+        "gender" : {
+          "type" : "string",
+          "example" : "Female"
+        },
+        "maritalStatus" : {
+          "type" : "string",
+          "example" : "Single"
+        },
+        "address" : {
+          "$ref" : "#/definitions/Addresses"
+        },
+        "countryPrefix" : {
+          "type" : "string",
+          "example" : "63"
+        },
+        "prefix" : {
+          "type" : "string",
+          "example" : "2"
+        },
+        "phoneNumber" : {
+          "type" : "string",
+          "example" : "6628013"
+        },
+        "email" : {
+          "type" : "string",
+          "example" : "jennycruz11@yahoo.com"
+        }
+      }
+    },
+    "inline_response_200_6_contractHolder_legalRepresentative" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1221.1640"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1221.1011"
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "Jon Jon"
+        },
+        "middleName" : {
+          "type" : "string",
+          "example" : "Catalina"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "De Guzman"
+        }
+      }
+    },
+    "inline_response_200_6_contractHolder_collateralAssignee" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1221.5899"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1221.1012"
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "John Raphael"
+        },
+        "middleName" : {
+          "type" : "string",
+          "example" : "Legazpi"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Clarito"
+        },
+        "currency" : {
+          "type" : "string",
+          "example" : "PHP"
+        },
+        "collateralAssigneeAmount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 10000.0
+        },
+        "relationship" : {
+          "type" : "string",
+          "example" : "Stepbrother"
+        }
+      }
+    },
+    "inline_response_200_6_contractHolder" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1221.1640"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1221.1010"
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "Jon Jon"
+        },
+        "middleName" : {
+          "type" : "string",
+          "example" : "Catalina"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "De Guzman"
+        },
+        "birthDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "nationality" : {
+          "type" : "string",
+          "example" : "Filipino"
+        },
+        "occupation" : {
+          "type" : "string",
+          "example" : "Accountant"
+        },
+        "gender" : {
+          "type" : "string",
+          "example" : "Male"
+        },
+        "maritalStatus" : {
+          "type" : "string",
+          "example" : "Married"
+        },
+        "address" : {
+          "$ref" : "#/definitions/Addresses"
+        },
+        "countryPrefix" : {
+          "type" : "string",
+          "example" : "63"
+        },
+        "prefix" : {
+          "type" : "string",
+          "example" : "2"
+        },
+        "phoneNumber" : {
+          "type" : "string",
+          "example" : "9891334"
+        },
+        "email" : {
+          "type" : "string",
+          "example" : "jonjondg@gmail.com"
+        },
+        "legalRepresentative" : {
+          "$ref" : "#/definitions/inline_response_200_6_contractHolder_legalRepresentative"
+        },
+        "collateralAssignee" : {
+          "$ref" : "#/definitions/inline_response_200_6_contractHolder_collateralAssignee"
+        }
+      }
+    },
+    "inline_response_200_6_lifeContractCalculation" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "basicCashValue" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 12000.0
+        },
+        "basicCashValueDate" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "19500"
+        },
+        "riderCashValue" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 20000.0
+        },
+        "riderCashValueDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "dividendAmount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 12200.0
+        },
+        "advancePremiumDeposit" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 10000.0
+        },
+        "advancePremiumDepositDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "suspenseAmount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 10000.0
+        },
+        "gracePeriodBalance" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 2000.0
+        },
+        "gracePeriodBalanceDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "premiumLoanBalance" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 50000.0
+        },
+        "loanBalance" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 50000.0
+        }
+      }
+    },
+    "inline_response_200_6_lifeDetails" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "nonPaymentForfeiture" : {
+          "type" : "string",
+          "example" : "false"
+        },
+        "payoutMethod" : {
+          "type" : "string",
+          "example" : "Left on Deposit"
+        },
+        "flexiFundcontributionAmount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 10000.0
+        },
+        "flexiFundContributionEffectiveDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lifeContractCalculation" : {
+          "$ref" : "#/definitions/inline_response_200_6_lifeContractCalculation"
+        }
+      }
+    },
+    "inline_response_200_6_dividends" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "checkDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "currency" : {
+          "type" : "string",
+          "example" : "PHP"
+        },
+        "amount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 10000.0
+        }
+      }
+    },
+    "inline_response_200_6" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1221.1456"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1221.1008"
+        },
+        "contractNumber" : {
+          "type" : "string",
+          "example" : "10000888"
+        },
+        "currency" : {
+          "type" : "string",
+          "example" : "PHP"
+        },
+        "inceptionDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "contractInterval" : {
+          "$ref" : "#/definitions/Interval"
+        },
+        "purchaseDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "branchName" : {
+          "type" : "string",
+          "example" : "Allianz PNB Life"
+        },
+        "productOfferingName" : {
+          "type" : "string",
+          "example" : "AP_HERO_100_PHP_NG_AGENCY"
+        },
+        "contractType" : {
+          "type" : "string",
+          "example" : "Regular Pay"
+        },
+        "paymentFrequency" : {
+          "type" : "string",
+          "example" : "Monthly"
+        },
+        "netPremium" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 8000.0
+        },
+        "insuranceSum" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 80000.0
+        },
+        "paymentDuration" : {
+          "type" : "string",
+          "format" : "period",
+          "example" : "72M"
+        },
+        "effectiveDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "status" : {
+          "type" : "string",
+          "example" : "Inforce"
+        },
+        "annualPremium" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 9000.0
+        },
+        "paymentMode" : {
+          "type" : "string",
+          "example" : "Credit Card"
+        },
+        "dividendPaymentMethod" : {
+          "type" : "string",
+          "example" : "Cash"
+        },
+        "insured" : {
+          "$ref" : "#/definitions/inline_response_200_6_insured"
+        },
+        "contractHolder" : {
+          "$ref" : "#/definitions/inline_response_200_6_contractHolder"
+        },
+        "lifeDetails" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/inline_response_200_6_lifeDetails"
+          }
+        },
+        "dividends" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/inline_response_200_6_dividends"
+          }
+        }
+      }
+    },
+    "contractscontractIdcoverages_coverageInterval" : {
+      "properties" : {
+        "endDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "inline_response_200_7" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Accidental Death & Dismemberment"
+        },
+        "paymentDuration" : {
+          "type" : "string",
+          "format" : "period",
+          "example" : "72M"
+        },
+        "status" : {
+          "type" : "string",
+          "example" : "Active"
+        },
+        "statusDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "insuranceSum" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 10000.0
+        },
+        "technicalPrice" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 10000.0
+        },
+        "coverageInterval" : {
+          "$ref" : "#/definitions/contractscontractIdcoverages_coverageInterval"
+        }
+      }
+    },
+    "inline_response_200_8" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1221.5922"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1221.1013"
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "Kristoff"
+        },
+        "middleName" : {
+          "type" : "string",
+          "example" : "Legarda"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Quirino"
+        },
+        "birthDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "relationship" : {
+          "type" : "object",
+          "example" : "Brother",
+          "properties" : { }
+        },
+        "priorityLevel" : {
+          "type" : "object",
+          "example" : "Primary",
+          "properties" : { }
+        },
+        "isRevocable" : {
+          "type" : "boolean",
+          "example" : true
+        },
+        "percentShare" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 50.0
+        }
+      }
+    },
+    "inline_response_200_9" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "loanAmount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 10000.0
+        },
+        "outstandingAmount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 100000.0
+        },
+        "tenure" : {
+          "type" : "integer",
+          "example" : 10
+        },
+        "basicAmount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 8000.0
+        },
+        "interestAmount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 2000.0
+        },
+        "lender" : {
+          "type" : "string",
+          "example" : "Description of Policy Loan Origin"
+        }
+      }
+    },
+    "inline_response_200_10" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "bankName" : {
+          "type" : "string",
+          "example" : "PNB"
+        },
+        "bankAccountType" : {
+          "type" : "string",
+          "example" : "SA"
+        },
+        "amount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 100000.0
+        },
+        "endowmentDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "endowmentStatus" : {
+          "type" : "string",
+          "example" : "Active"
+        }
+      }
+    },
+    "inline_response_200_11" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "description" : {
+          "type" : "string",
+          "example" : "Funds"
+        },
+        "numberOfShares" : {
+          "type" : "integer",
+          "example" : 30
+        },
+        "fundPrice" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 100000.0
+        },
+        "currentValue" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 40000.0
+        },
+        "percentage" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 30.0
+        }
+      }
+    },
+    "inline_response_200_12" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "transactionExecutionDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "transactionOrderDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "transactionNumber" : {
+          "type" : "string",
+          "example" : "10003322"
+        },
+        "transactionType" : {
+          "type" : "string",
+          "example" : "Topup"
+        },
+        "transactionAmount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 12000.0
+        },
+        "fundPrice" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 12000.0
+        },
+        "fundShares" : {
+          "type" : "integer",
+          "example" : 2
+        },
+        "balance" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 2000.0
+        }
+      }
+    },
+    "inline_response_200_13" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "orderNumber" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "dueDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "paymentMode" : {
+          "type" : "string",
+          "example" : "Credit Card"
+        },
+        "referenceNumber" : {
+          "type" : "string",
+          "example" : "149812"
+        },
+        "paidDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "paidAmount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 1000.0
+        },
+        "accountingDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "amount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 2000.0
+        }
+      }
+    },
+    "inline_response_200_14" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "contractNumber" : {
+          "type" : "string",
+          "example" : "1999940"
+        },
+        "claimNumber" : {
+          "type" : "string",
+          "example" : "1009449"
+        },
+        "creationDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "claimStatus" : {
+          "type" : "string",
+          "example" : "Claimed"
+        },
+        "refundAmount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 40000.0
+        }
+      }
+    },
+    "inline_response_200_15" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "orderNumber" : {
+          "type" : "integer",
+          "example" : 1
+        },
+        "type" : {
+          "type" : "string",
+          "example" : "Endorsement"
+        },
+        "inceptionDate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "state" : {
+          "type" : "string",
+          "example" : "Active"
+        },
+        "userRemarks" : {
+          "type" : "string",
+          "example" : "User Remarks"
+        },
+        "systemRemarks" : {
+          "type" : "string",
+          "example" : "System Remarks"
+        }
+      }
+    },
+    "inline_response_200_16" : {
+      "properties" : {
+        "self" : {
+          "type" : "string",
+          "example" : "1"
+        },
+        "transactionNumber" : {
+          "type" : "string",
+          "example" : "789110001"
+        },
+        "reinstatementOption" : {
+          "type" : "string",
+          "example" : "Option"
+        },
+        "status" : {
+          "type" : "string",
+          "example" : "Active"
+        },
+        "validityInterval" : {
+          "$ref" : "#/definitions/Interval"
+        },
+        "amount" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 19999.0
+        },
+        "balance" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 10000.0
+        },
+        "reinstatementRequirements" : {
+          "type" : "object",
+          "example" : { },
+          "properties" : { }
+        }
+      }
+    },
+    "body" : {
+      "type" : "object",
+      "properties" : {
+        "email" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "subject" : {
+          "type" : "string"
+        },
+        "creationDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "inline_response_200_17" : {
+      "properties" : {
+        "message" : {
+          "type" : "string"
+        },
+        "creationDateTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "inline_response_200_18_accountManager" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1221.1277"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1221.1015"
+        },
+        "alias" : {
+          "type" : "string"
+        },
+        "roleNameOfAccountManager" : {
+          "type" : "string",
+          "example" : "Agent"
+        },
+        "agentNumber" : {
+          "type" : "string",
+          "example" : "1239999"
+        },
+        "branchList" : {
+          "type" : "object",
+          "example" : {
+            "BMABC" : "MAKATI-ALLIED BANK CENTER"
+          },
+          "properties" : { }
+        },
+        "image" : {
+          "type" : "string",
+          "format" : "byte",
+          "pattern" : "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+        }
+      }
+    },
+    "inline_response_200_18" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "2018.1221.1254"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "2018.1221.1014"
+        },
+        "loggedInUserId" : {
+          "type" : "string",
+          "example" : "john.manuel"
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "John"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Manuel"
+        },
+        "accountManager" : {
+          "$ref" : "#/definitions/inline_response_200_18_accountManager"
+        },
+        "countryPrefix" : {
+          "type" : "string",
+          "example" : "63"
+        },
+        "prefix" : {
+          "type" : "string",
+          "example" : "2"
+        },
+        "phoneNumber" : {
+          "type" : "string",
+          "example" : "8185433"
+        },
+        "email" : {
+          "type" : "string",
+          "example" : "john.manuel@allianzpnblife.ph"
+        }
+      }
+    },
+    "Addresses_inner" : {
+      "properties" : {
+        "self" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "isPreferredBilling" : {
+          "type" : "boolean"
+        },
+        "isPreferredMailing" : {
+          "type" : "boolean"
+        },
+        "buildingName" : {
+          "type" : "string"
+        },
+        "floorNumber" : {
+          "type" : "string"
+        },
+        "street" : {
+          "type" : "string"
+        },
+        "district" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "state" : {
+          "type" : "string"
+        },
+        "countryCode" : {
+          "type" : "string"
+        },
+        "zipCode" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Agent_advisor" : {
+      "properties" : {
+        "globalId" : {
+          "type" : "string",
+          "example" : "9007000"
+        },
+        "self" : {
+          "type" : "string",
+          "example" : "9009000"
+        },
+        "agentNumber" : {
+          "type" : "string",
+          "example" : "9009000"
+        },
+        "agentNumberOfAdvisorOfAccountManager" : {
+          "type" : "string",
+          "example" : "7008000"
+        },
+        "firstName" : {
+          "type" : "string",
+          "example" : "Nigel"
+        },
+        "middleName" : {
+          "type" : "string",
+          "example" : "Dale"
+        },
+        "lastName" : {
+          "type" : "string",
+          "example" : "Ware"
+        }
+      }
+    },
+    "Agent_webuser" : {
+      "properties" : {
+        "loggedInUserId" : {
+          "type" : "string",
+          "example" : "peter.hemsworth"
+        }
+      }
+    }
+  }
+}
