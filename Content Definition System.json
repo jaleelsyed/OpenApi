@@ -1,0 +1,1475 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Proposed API for Content Definition System",
+    "version" : "1.0.0",
+    "title" : "Content Definition System",
+    "contact" : {
+      "email" : "aaron@jloop.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/lerivin/ContentDefinitionSystem/1.0.0",
+  "tags" : [ {
+    "name" : "AttributeType",
+    "description" : "Attribute Types is the lowest element of the content definition system. Attribute Type defines the type of value an attribute can take and the rules around that attribute, such as what fields are available for the user to define and under what rules such as minimum and maximum values."
+  }, {
+    "name" : "Attribute",
+    "description" : "Attributes define a specific value or references a specific content item(s)  that helps make up a piece of content. Attributes are defined per piece of content by its Content Type and Display Template definition."
+  }, {
+    "name" : "ContentType",
+    "description" : "Defines a specific type of content. A definition includes a name, a list of available attributes, and the Content Item"
+  }, {
+    "name" : "ContentDomain",
+    "description" : "A container around Content Types that can be used to add attributes to all Content Types within. <br /><br />Defines a group of blue groups who have access to the Content Domain as well as a set of additional Attributes used when defining a piece of content. The Content Domain’s Attributes are in addition to those defined on the Content Type"
+  }, {
+    "name" : "DisplayTemplate",
+    "description" : "The definition of the content as far as its technical structure is understood - specifically as it has to do with its delivery to an end user. Display Templates will be predefined and not available for custom creation within the CDS."
+  }, {
+    "name" : "Context",
+    "description" : "The highest-level identifier of the content - its purpose or objective. Also used to determine how to evaluate the value of content with items like Ratings, Usage metrics, etc. Contexts are linked to a group of selected categories."
+  }, {
+    "name" : "Category",
+    "description" : "A flexible structure for creating nested categories that can be applied across the system based on the Context of the Content. Categories would include topics, service lines, practices, etc.."
+  } ],
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/attribute-type" : {
+      "get" : {
+        "tags" : [ "AttributeType" ],
+        "summary" : "List of  attribute types in the system",
+        "description" : "Returns a list of attributes types in the system. If a list of ids are provided in the query, those are returned. Otherwise all attribute types in the system are returned.\n",
+        "operationId" : "getAttributeTypes",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "ids",
+          "in" : "query",
+          "description" : "Array of uids (optional)",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns an array of all attributes in the system",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/AttributeType"
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/attribute-type/{uid}" : {
+      "get" : {
+        "tags" : [ "AttributeType" ],
+        "summary" : "Get a single attribute type based on uid",
+        "description" : "Returns a single attribute type\n",
+        "operationId" : "getAttributeType",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns a single attribute type",
+            "schema" : {
+              "$ref" : "#/definitions/AttributeType"
+            }
+          },
+          "404" : {
+            "description" : "Requested attribute type was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/attribute" : {
+      "get" : {
+        "tags" : [ "Attribute" ],
+        "summary" : "Get all attributes in the system",
+        "description" : "Returns a list of attributes in the system. If a list of ids are provided in the query, those are returned. Otherwise all attributes in the system are returned.\n",
+        "operationId" : "attributes",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "ids",
+          "in" : "query",
+          "description" : "Array of uids (optional)",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns an array of all attributes in the system",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Attribute"
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Attribute" ],
+        "summary" : "Create a new attribute",
+        "description" : "Creates a new attribute into the content definition system\n",
+        "operationId" : "createAttribute",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "attribute",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/AttributeCreate"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully created attribute. attribute uid included in header in property 'location'",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Attribute"
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/attribute/{uid}" : {
+      "get" : {
+        "tags" : [ "Attribute" ],
+        "summary" : "Get a single attribute based on uid",
+        "description" : "Returns a single attribute\n",
+        "operationId" : "attribute",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns a single attribute",
+            "schema" : {
+              "$ref" : "#/definitions/Attribute"
+            }
+          },
+          "404" : {
+            "description" : "Requested attribute was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Attribute" ],
+        "summary" : "Deletes a single attribute based on uid",
+        "description" : "Deletes a single attribute\n",
+        "operationId" : "deleteAttribute",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok"
+          },
+          "400" : {
+            "description" : "Error while deleting attribute. Reason should be given in response."
+          },
+          "404" : {
+            "description" : "Requested attribute was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Attribute" ],
+        "summary" : "Updates a single attribute based on uid",
+        "description" : "Updates a single attribute\n",
+        "operationId" : "updateAttribute",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "attribute",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Attribute"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok",
+            "schema" : {
+              "$ref" : "#/definitions/Attribute"
+            }
+          },
+          "400" : {
+            "description" : "Error while deleting attribute. Reason should be given in response."
+          },
+          "404" : {
+            "description" : "Requested attribute was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/content-type" : {
+      "get" : {
+        "tags" : [ "ContentType" ],
+        "summary" : "Get all content types in the system",
+        "description" : "Returns a list of content types in the system. If a list of ids are provided in the query, those are returned. Otherwise all content types in the system are returned.\n",
+        "operationId" : "getContentTypes",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "ids",
+          "in" : "query",
+          "description" : "Array of uids (optional)",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns an array of all content types in the system",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ContentType"
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "ContentType" ],
+        "summary" : "Create a new content type",
+        "description" : "Creates a new content type into the content definition system\n",
+        "operationId" : "create content type",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "content type",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/ContentTypeCreate"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully created content type. content type uid included in header in property 'location'",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ContentType"
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/content-type/{uid}" : {
+      "get" : {
+        "tags" : [ "ContentType" ],
+        "summary" : "Get a single content type based on uid",
+        "description" : "Returns a single content type\n",
+        "operationId" : "contentType",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns a single content type",
+            "schema" : {
+              "$ref" : "#/definitions/ContentType"
+            }
+          },
+          "404" : {
+            "description" : "Requested content type was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "ContentType" ],
+        "summary" : "Deletes a single content type based on uid",
+        "description" : "Deletes a single content type\n",
+        "operationId" : "deleteContentType",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok"
+          },
+          "400" : {
+            "description" : "Error while deleting content type. Reason should be given in response."
+          },
+          "404" : {
+            "description" : "Requested content type was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "ContentType" ],
+        "summary" : "Updates a single content type based on uid",
+        "description" : "Updates a single content type\n",
+        "operationId" : "updateContentType",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "content type",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/ContentType"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok",
+            "schema" : {
+              "$ref" : "#/definitions/ContentType"
+            }
+          },
+          "400" : {
+            "description" : "Error while deleting content type. Reason should be given in response."
+          },
+          "404" : {
+            "description" : "Requested content type was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/content-domain" : {
+      "get" : {
+        "tags" : [ "ContentDomain" ],
+        "summary" : "Get all content domains in the system",
+        "description" : "Returns a list of content domains in the system. If a list of ids are provided in the query, those are returned. Otherwise all content domains in the system are returned.\n",
+        "operationId" : "getContentDomain",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "ids",
+          "in" : "query",
+          "description" : "Array of uids (optional)",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns an array of all content domains in the system",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ContentDomain"
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "ContentDomain" ],
+        "summary" : "Create a new content domain",
+        "description" : "Creates a new content domain into the content definition system\n",
+        "operationId" : "create content domain",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "content domain",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/ContentDomainCreate"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully created content domain. content domain uid included in header in property 'location'",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ContentDomain"
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/content-domain/{uid}" : {
+      "get" : {
+        "tags" : [ "ContentDomain" ],
+        "summary" : "Get a single content domain based on uid",
+        "description" : "Returns a single content domain\n",
+        "operationId" : "ContentDomain",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns a single content domain",
+            "schema" : {
+              "$ref" : "#/definitions/ContentDomain"
+            }
+          },
+          "404" : {
+            "description" : "Requested content domain was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "ContentDomain" ],
+        "summary" : "Deletes a single content domain based on uid",
+        "description" : "Deletes a single content domain\n",
+        "operationId" : "deleteContentDomain",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok"
+          },
+          "400" : {
+            "description" : "Error while deleting content domain. Reason should be given in response."
+          },
+          "404" : {
+            "description" : "Requested content domain was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "ContentDomain" ],
+        "summary" : "Updates a single content domain based on uid",
+        "description" : "Updates a single content domain\n",
+        "operationId" : "updateContentDomain",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "content domain",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/ContentDomain"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok",
+            "schema" : {
+              "$ref" : "#/definitions/ContentDomain"
+            }
+          },
+          "400" : {
+            "description" : "Error while deleting content domain. Reason should be given in response."
+          },
+          "404" : {
+            "description" : "Requested content domain was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/display-template" : {
+      "get" : {
+        "tags" : [ "DisplayTemplate" ],
+        "summary" : "List of display template types in the system",
+        "description" : "Returns a list of display templates types in the system. If a list of ids are provided in the query, those are returned. Otherwise all display template types in the system are returned.\n",
+        "operationId" : "displayTemplates",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "ids",
+          "in" : "query",
+          "description" : "Array of uids (optional)",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns an array of all display templates in the system",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/DisplayTemplate"
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/display-template/{uid}" : {
+      "get" : {
+        "tags" : [ "DisplayTemplate" ],
+        "summary" : "Get a single display template based on uid",
+        "description" : "Returns a single display template type\n",
+        "operationId" : "getDisplayTemplate",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns a single display template",
+            "schema" : {
+              "$ref" : "#/definitions/DisplayTemplate"
+            }
+          },
+          "404" : {
+            "description" : "Requested display template was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/context" : {
+      "get" : {
+        "tags" : [ "Context" ],
+        "summary" : "Get all contexts in the system",
+        "description" : "Returns a list of contexts in the system. If a list of ids are provided in the query, those are returned. Otherwise all contexts in the system are returned.\n",
+        "operationId" : "getContext",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "ids",
+          "in" : "query",
+          "description" : "Array of uids (optional)",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns an array of all contexts in the system",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Context"
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Context" ],
+        "summary" : "Create a new context",
+        "description" : "Creates a new context into the content definition system\n",
+        "operationId" : "create context",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "context",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/ContextCreate"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully created context. context uid included in header in property 'location'",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Context"
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/context/{uid}" : {
+      "get" : {
+        "tags" : [ "Context" ],
+        "summary" : "Get a single context based on uid",
+        "description" : "Returns a single context\n",
+        "operationId" : "Context",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns a single context",
+            "schema" : {
+              "$ref" : "#/definitions/Context"
+            }
+          },
+          "404" : {
+            "description" : "Requested context was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Context" ],
+        "summary" : "Deletes a single content domain based on uid",
+        "description" : "Deletes a single content domain\n",
+        "operationId" : "deleteContext",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok"
+          },
+          "400" : {
+            "description" : "Error while deleting content domain. Reason should be given in response."
+          },
+          "404" : {
+            "description" : "Requested content domain was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Context" ],
+        "summary" : "Updates a single content domain based on uid",
+        "description" : "Updates a single content domain\n",
+        "operationId" : "updateContext",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "content domain",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Context"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok",
+            "schema" : {
+              "$ref" : "#/definitions/Context"
+            }
+          },
+          "400" : {
+            "description" : "Error while deleting content domain. Reason should be given in response."
+          },
+          "404" : {
+            "description" : "Requested content domain was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/categories" : {
+      "get" : {
+        "tags" : [ "Category" ],
+        "summary" : "Get all categories in the system",
+        "description" : "Returns a list of categories in the system. If a list of ids are provided in the query, those are returned. Otherwise all categories in the system are returned.\n",
+        "operationId" : "getCategory",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "ids",
+          "in" : "query",
+          "description" : "Array of uids (optional)",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "collectionFormat" : "multi"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns an array of all categories in the system",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Category"
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Category" ],
+        "summary" : "Create a new category",
+        "description" : "Creates a new category into the content definition system\n",
+        "operationId" : "create category",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "category",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/CategoryCreate"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successfully created category. category uid included in header in property 'location'",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Category"
+              }
+            }
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/categories/{uid}" : {
+      "get" : {
+        "tags" : [ "Category" ],
+        "summary" : "Get a single category based on uid",
+        "description" : "Returns a single category\n",
+        "operationId" : "Category",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Returns a single category",
+            "schema" : {
+              "$ref" : "#/definitions/Category"
+            }
+          },
+          "404" : {
+            "description" : "Requested category was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Category" ],
+        "summary" : "Deletes a single category based on uid",
+        "description" : "Deletes a single category\n",
+        "operationId" : "deleteCategory",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok"
+          },
+          "400" : {
+            "description" : "Error while deleting category. Reason should be given in response."
+          },
+          "404" : {
+            "description" : "Requested category was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Category" ],
+        "summary" : "Updates a single category based on uid",
+        "description" : "Updates a single category\n",
+        "operationId" : "updateCategory",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "uid",
+          "in" : "path",
+          "description" : "Unique identifier",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "category",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Category"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Ok",
+            "schema" : {
+              "$ref" : "#/definitions/Category"
+            }
+          },
+          "400" : {
+            "description" : "Error while deleting category. Reason should be given in response."
+          },
+          "404" : {
+            "description" : "Requested category was not found"
+          },
+          "500" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "AttributeType" : {
+      "type" : "object",
+      "required" : [ "name", "uid" ],
+      "properties" : {
+        "uid" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "description" : "Unique Identifier"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Abstract",
+          "description" : "Display name of the attribute."
+        },
+        "requiresMinimum" : {
+          "type" : "boolean",
+          "example" : false,
+          "description" : "Indicates minimum is required on attribute"
+        },
+        "requiresMaximum" : {
+          "type" : "boolean",
+          "example" : false,
+          "description" : "Indicates maximum is required on attribute"
+        },
+        "requiresContentTypeId" : {
+          "type" : "boolean",
+          "example" : false,
+          "description" : "Indicated contentTypeId is required on attribute"
+        }
+      }
+    },
+    "Attribute" : {
+      "type" : "object",
+      "required" : [ "attributeTypeId", "helpText", "isRequired", "name", "uid" ],
+      "properties" : {
+        "uid" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "description" : "Unique Identifier"
+        },
+        "attributeTypeId" : {
+          "type" : "integer",
+          "example" : 12345,
+          "description" : "Reference to Attribute Type used to define attribute. Based on attribute type, more fields can be required."
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Abstract",
+          "description" : "Display name of the attribute."
+        },
+        "helpText" : {
+          "type" : "string",
+          "description" : "Help text that shows up when a user wants additional info when defining the attribute while creating content."
+        },
+        "isRequired" : {
+          "type" : "boolean",
+          "example" : false,
+          "description" : "Flag indicating if the attribute is required"
+        },
+        "minimum" : {
+          "type" : "integer",
+          "example" : 1,
+          "description" : "The minimum value of the attribute. Can be required based on attributeType"
+        },
+        "maximum" : {
+          "type" : "integer",
+          "example" : 100,
+          "description" : "The maximum value of the attribute. Can be required based on attributeType"
+        },
+        "contentTypeId" : {
+          "type" : "integer",
+          "example" : 12345,
+          "description" : "Reference to a specific type of content. This indicates that when filling out the attribute a user has to specify a specific type of content"
+        },
+        "frequency" : {
+          "type" : "integer",
+          "example" : 3,
+          "description" : "The number of values a user can enter for this attribute. The default is 1. Example a user may want to add multiple pieces of content to a single attribute."
+        },
+        "availableValues" : {
+          "type" : "array",
+          "example" : [ "CA", "AZ", "FL" ],
+          "description" : "An array of values for a specific attribute",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "answeredAttributes" : {
+          "type" : "array",
+          "example" : [ {
+            "value" : "yes",
+            "attributeId" : 12345
+          }, {
+            "value" : "no",
+            "attributeId" : 54321
+          } ],
+          "description" : "An array of potential answers that drive other attributes. For example, if a user enters “Yes” to a question, an additional question may be asked of the content author.",
+          "items" : {
+            "type" : "object",
+            "properties" : { }
+          }
+        }
+      }
+    },
+    "AttributeCreate" : {
+      "type" : "object",
+      "required" : [ "attributeTypeId", "helpText", "isRequired", "name" ],
+      "properties" : {
+        "attributeTypeId" : {
+          "type" : "integer",
+          "example" : 12345,
+          "description" : "Reference to Attribute Type used to define attribute. Based on attribute type, more fields can be required."
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Abstract",
+          "description" : "Display name of the attribute."
+        },
+        "helpText" : {
+          "type" : "string",
+          "description" : "Help text that shows up when a user wants additional info when defining the attribute while creating content."
+        },
+        "isRequired" : {
+          "type" : "boolean",
+          "example" : false,
+          "description" : "Flag indicating if the attribute is required"
+        },
+        "minimum" : {
+          "type" : "integer",
+          "example" : 1,
+          "description" : "The minimum value of the attribute. Can be required based on attributeType"
+        },
+        "maximum" : {
+          "type" : "integer",
+          "example" : 100,
+          "description" : "The maximum value of the attribute. Can be required based on attributeType"
+        },
+        "contentTypeId" : {
+          "type" : "integer",
+          "example" : 12345,
+          "description" : "Reference to a specific type of content. This indicates that when filling out the attribute a user has to specify a specific type of content"
+        },
+        "frequency" : {
+          "type" : "integer",
+          "example" : 3,
+          "description" : "The number of values a user can enter for this attribute. The default is 1. Example a user may want to add multiple pieces of content to a single attribute."
+        },
+        "availableValues" : {
+          "type" : "array",
+          "example" : [ "CA", "AZ", "FL" ],
+          "description" : "An array of values for a specific attribute",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "answeredAttributes" : {
+          "type" : "array",
+          "example" : [ {
+            "value" : "yes",
+            "attributeId" : 12345
+          }, {
+            "value" : "no",
+            "attributeId" : 54321
+          } ],
+          "description" : "An array of potential answers that drive other attributes. For example, if a user enters “Yes” to a question, an additional question may be asked of the content author.",
+          "items" : {
+            "type" : "object",
+            "properties" : { }
+          }
+        }
+      }
+    },
+    "ContentType" : {
+      "type" : "object",
+      "required" : [ "name", "uid" ],
+      "properties" : {
+        "uid" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "description" : "Unique Identifier"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Proposal",
+          "description" : "Display name of the content type."
+        },
+        "parentId" : {
+          "type" : "integer",
+          "example" : 12345,
+          "description" : "Reference to parent ContentType"
+        },
+        "attributes" : {
+          "type" : "array",
+          "example" : [ {
+            "attributeId" : 1234,
+            "properties" : {
+              "minimum" : 1,
+              "maximum" : 300
+            }
+          } ],
+          "description" : "JSON structure defining what attributes are to be included and what properties are overridden by those defined on the attribute",
+          "items" : {
+            "type" : "object",
+            "properties" : { }
+          }
+        }
+      }
+    },
+    "ContentTypeCreate" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "uid" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "description" : "Unique Identifier"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Proposal",
+          "description" : "Display name of the content type."
+        },
+        "parentId" : {
+          "type" : "integer",
+          "example" : 12345,
+          "description" : "Reference to parent ContentType"
+        },
+        "attributes" : {
+          "type" : "array",
+          "example" : [ {
+            "attributeId" : 1234,
+            "properties" : {
+              "minimum" : 1,
+              "maximum" : 300
+            }
+          } ],
+          "description" : "JSON structure defining what attributes are to be included and what properties are overridden by those defined on the attribute",
+          "items" : {
+            "type" : "object",
+            "properties" : { }
+          }
+        }
+      }
+    },
+    "ContentDomain" : {
+      "type" : "object",
+      "required" : [ "name", "uid" ],
+      "properties" : {
+        "uid" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "description" : "Unique Identifier"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Proposal",
+          "description" : "Display name of the content type."
+        },
+        "bluegroups" : {
+          "type" : "array",
+          "example" : [ "Lighthouse Box CMS - Administrators", "Lighthouse X FED" ],
+          "description" : "Array of blue groups",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "attributes" : {
+          "type" : "array",
+          "example" : [ {
+            "attributeId" : 1234,
+            "properties" : {
+              "minimum" : 1,
+              "maximum" : 300
+            }
+          } ],
+          "description" : "JSON structure defining what attributes are to be included and what properties are overridden by those defined on the attribute",
+          "items" : {
+            "type" : "object",
+            "properties" : { }
+          }
+        }
+      }
+    },
+    "ContentDomainCreate" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "uid" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "description" : "Unique Identifier"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "IBV",
+          "description" : "Display name of the content type."
+        },
+        "bluegroups" : {
+          "type" : "array",
+          "example" : [ "Lighthouse Box CMS - Administrators", "Lighthouse X FED" ],
+          "description" : "Array of blue groups",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "attributes" : {
+          "type" : "array",
+          "example" : [ {
+            "attributeId" : 1234,
+            "properties" : {
+              "minimum" : 1,
+              "maximum" : 300
+            }
+          } ],
+          "description" : "JSON structure defining what attributes are to be included and what properties are overridden by those defined on the attribute",
+          "items" : {
+            "type" : "object",
+            "properties" : { }
+          }
+        }
+      }
+    },
+    "DisplayTemplate" : {
+      "type" : "object",
+      "properties" : {
+        "uid" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "description" : "Unique Identifier"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Folio",
+          "description" : "Display name of the attribute."
+        },
+        "type" : {
+          "type" : "string",
+          "example" : "folio",
+          "description" : "type used to help the UI leverage the correct template"
+        },
+        "fileType" : {
+          "type" : "string",
+          "example" : "single or group",
+          "description" : "Defines the amount of items that can be attached. Options are 'single', 'group'"
+        }
+      }
+    },
+    "Context" : {
+      "type" : "object",
+      "required" : [ "name", "uid" ],
+      "properties" : {
+        "uid" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "description" : "Unique Identifier"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Reusable Resource",
+          "description" : "Display name of the context."
+        },
+        "categories" : {
+          "type" : "array",
+          "example" : [ 12345, 54321 ],
+          "description" : "Array of categories that are available when creating content with this context",
+          "items" : {
+            "type" : "integer"
+          }
+        },
+        "icon" : {
+          "type" : "object",
+          "description" : "Image/Asset object from asset api.",
+          "properties" : { }
+        },
+        "color" : {
+          "type" : "string",
+          "example" : "#FEFEFE",
+          "description" : "A hex code used for displaying typography in a specific color"
+        }
+      }
+    },
+    "ContextCreate" : {
+      "type" : "object",
+      "required" : [ "name", "uid" ],
+      "properties" : {
+        "uid" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "description" : "Unique Identifier"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Reusable Resource",
+          "description" : "Display name of the context."
+        },
+        "categories" : {
+          "type" : "array",
+          "example" : [ 12345, 54321 ],
+          "description" : "Array of categories that are available when creating content with this context",
+          "items" : {
+            "type" : "integer"
+          }
+        },
+        "icon" : {
+          "type" : "object",
+          "description" : "Image/Asset object from asset api.",
+          "properties" : { }
+        },
+        "color" : {
+          "type" : "string",
+          "example" : "#FEFEFE",
+          "description" : "A hex code used for displaying typography in a specific color"
+        }
+      }
+    },
+    "Category" : {
+      "type" : "object",
+      "required" : [ "name", "uid" ],
+      "properties" : {
+        "uid" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "description" : "Unique Identifier"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Automotive",
+          "description" : "Display name of the category."
+        },
+        "parentId" : {
+          "type" : "integer",
+          "example" : 12345,
+          "description" : "Reference to parent category"
+        },
+        "image" : {
+          "type" : "object",
+          "description" : "Image/Asset object from asset api.",
+          "properties" : { }
+        },
+        "color" : {
+          "type" : "string",
+          "example" : "#FEFEFE",
+          "description" : "A hex code used for displaying typography in a specific color"
+        }
+      }
+    },
+    "CategoryCreate" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "uid" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851",
+          "description" : "Unique Identifier"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Automotive",
+          "description" : "Display name of the category."
+        },
+        "parentId" : {
+          "type" : "integer",
+          "example" : 12345,
+          "description" : "Reference to parent category"
+        },
+        "image" : {
+          "type" : "object",
+          "description" : "Image/Asset object from asset api.",
+          "properties" : { }
+        },
+        "color" : {
+          "type" : "string",
+          "example" : "#FEFEFE",
+          "description" : "A hex code used for displaying typography in a specific color"
+        }
+      }
+    }
+  },
+  "parameters" : {
+    "uid" : {
+      "name" : "uid",
+      "in" : "path",
+      "description" : "Unique identifier",
+      "required" : true,
+      "type" : "string"
+    },
+    "ids" : {
+      "name" : "ids",
+      "in" : "query",
+      "description" : "Array of uids (optional)",
+      "required" : false,
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      },
+      "collectionFormat" : "multi"
+    }
+  }
+}
