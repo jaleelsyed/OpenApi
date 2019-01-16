@@ -1,0 +1,838 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Sports Clash API 1.1.6",
+    "version" : "1.1.7",
+    "title" : "Sports Clash API",
+    "contact" : {
+      "email" : "bob@sourcedigital.net"
+    }
+  },
+  "host" : "api.sourcedigital.io",
+  "tags" : [ {
+    "name" : "drives",
+    "description" : "Access to Drives in a Game"
+  }, {
+    "name" : "games",
+    "description" : "Access to Game location, teams, start times, scores"
+  }, {
+    "name" : "leaderboard",
+    "description" : "Access to Leaderboard rankings of Users by number of successful predictions"
+  }, {
+    "name" : "predictions",
+    "description" : "User Prediction for a Drive"
+  }, {
+    "name" : "producer",
+    "description" : "Operations for use by the Producer Dashboard"
+  }, {
+    "name" : "system",
+    "description" : "Endpoints for uptime Ping test and Health Check"
+  }, {
+    "name" : "user",
+    "description" : "New User registration, login, and setting of favorite Sport and Team"
+  } ],
+  "schemes" : [ "https", "wss" ],
+  "paths" : {
+    "/games" : {
+      "get" : {
+        "tags" : [ "games" ],
+        "summary" : "Lists Games",
+        "description" : "Multiple status values can be provided with comma separated strings",
+        "operationId" : "listGames",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "inProgress",
+          "in" : "query",
+          "description" : "Is the Game currently in progress?",
+          "required" : false,
+          "type" : "boolean"
+        }, {
+          "name" : "canJoin",
+          "in" : "query",
+          "description" : "Can the currently logged-in User join the Game?",
+          "required" : false,
+          "type" : "boolean"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Game"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/drives" : {
+      "get" : {
+        "tags" : [ "drives" ],
+        "summary" : "Lists Drives for the Game the User has joined",
+        "description" : "Multiple status values can be provided with comma separated strings",
+        "operationId" : "listDrives",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "onlyMostRecent",
+          "in" : "query",
+          "description" : "The number of most recent Drives to return",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Drive"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid status value"
+          }
+        }
+      }
+    },
+    "/predictions" : {
+      "get" : {
+        "tags" : [ "predictions" ],
+        "summary" : "Get User Prediction",
+        "description" : "List User Predictions for the joined Game",
+        "operationId" : "getUserPredictions",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "onlyMostRecent",
+          "in" : "query",
+          "description" : "The number of most recent Drives to return",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Prediction"
+              }
+            }
+          },
+          "404" : {
+            "description" : "Predictions not found"
+          },
+          "405" : {
+            "description" : "Validation exception"
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        }, {
+          "ApiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/predictions/nextdriveoutcome" : {
+      "post" : {
+        "tags" : [ "predictions" ],
+        "summary" : "Submit user prediction for the next drive of the Game the User joined",
+        "description" : "Submit User predicted outcome of the next drive in the Game (if Game is currently accepting Predictions)'",
+        "operationId" : "submitPrediction",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "NextDriveOutcome object that needs to be submitted for the Prediction",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/NextDriveOutcome"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful submission of next drive outcome prediction",
+            "schema" : {
+              "$ref" : "#/definitions/Prediction"
+            }
+          },
+          "405" : {
+            "description" : "Invalid input"
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        }, {
+          "ApiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/user" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Register new User",
+        "description" : "This can be requested anonymously so visitor can self signup.",
+        "operationId" : "createUser",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "New User Registration object",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Registration"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid username/password supplied",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "default" : {
+            "description" : "Successful signup",
+            "schema" : {
+              "$ref" : "#/definitions/BearerToken"
+            }
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        }, {
+          "ApiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/user/authentication" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Log in as User using username and password",
+        "description" : "Authenticates User and return JWT",
+        "operationId" : "userAuthenticate",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Credentials"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful login",
+            "headers" : {
+              "X-AccessToken" : {
+                "type" : "string",
+                "description" : "JWT for use in Authorization header with Bearer scheme"
+              },
+              "X-Rate-Limit" : {
+                "type" : "integer",
+                "format" : "int32",
+                "description" : "calls per hour allowed by the user"
+              },
+              "X-Expires-After" : {
+                "type" : "string",
+                "format" : "date-time",
+                "description" : "date in UTC when token expires"
+              }
+            },
+            "schema" : {
+              "$ref" : "#/definitions/BearerToken"
+            }
+          },
+          "400" : {
+            "description" : "Invalid user supplied",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "401" : {
+            "description" : "Invalid username/password supplied",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        }, {
+          "ApiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/user/me" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "View User's own User data",
+        "description" : "Return User object (excluding password has) for user identified in the JWT",
+        "operationId" : "getMyUser",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful request for user data",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Update User's own profile",
+        "description" : "Updates User's favorite sport and team",
+        "operationId" : "updateUserProfile",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Profile"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful profile update",
+            "schema" : {
+              "$ref" : "#/definitions/Profile"
+            }
+          },
+          "401" : {
+            "description" : "Invalid or expired JWT",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        }
+      }
+    },
+    "/leaderboard" : {
+      "get" : {
+        "tags" : [ "leaderboard" ],
+        "summary" : "View Leaderboard",
+        "description" : "Return ordered array of Users ranked by number of successful predictions",
+        "operationId" : "getLeaderboard",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/producer/events" : {
+      "get" : {
+        "tags" : [ "producer" ],
+        "summary" : "Get Producer Events",
+        "description" : "",
+        "operationId" : "getProducerEvents",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "401" : {
+            "description" : "Authorization exception",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          },
+          "404" : {
+            "description" : "Events not found",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        }, {
+          "ApiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/producer/openprediction" : {
+      "post" : {
+        "tags" : [ "producer" ],
+        "summary" : "Submit an open prediction event from Producer Dashboard for the currect Drive of the Game",
+        "description" : "",
+        "operationId" : "submitOpenPredictionEvent",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Producer Dashboard Event Data",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/OpenPredictionEvent"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful open of prediction window"
+          },
+          "405" : {
+            "description" : "Invalid input",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        }, {
+          "ApiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/producer/closeprediction" : {
+      "post" : {
+        "tags" : [ "producer" ],
+        "summary" : "Close prediction window",
+        "description" : "Submit an close prediction event from Producer Dashboard for the currect Drive of the Game",
+        "operationId" : "submitClosePredictionEvent",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Producer Dashboard Event Data",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/ClosePredictionEvent"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful close of prediction window"
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        }, {
+          "ApiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/producer/outcome" : {
+      "post" : {
+        "tags" : [ "producer" ],
+        "summary" : "Submit the Outcome of a Drive from Producer Dashboard",
+        "description" : "Submit the Outcome of a Drive from Producer Dashboard",
+        "operationId" : "submitOutcomeEvent",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Producer Dashboard Event Data",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/OutcomeEvent"
+          }
+        } ],
+        "responses" : {
+          "405" : {
+            "description" : "Invalid input",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorMessage"
+            }
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        }, {
+          "ApiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/ping" : {
+      "get" : {
+        "tags" : [ "system" ],
+        "summary" : "Test API is online and responding to requests",
+        "description" : "Responds with 'pong'",
+        "operationId" : "ping",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Success: pong"
+          }
+        }
+      }
+    },
+    "/healthcheck" : {
+      "get" : {
+        "tags" : [ "system" ],
+        "summary" : "Return status of resources upon which the API depends.",
+        "description" : "Expect everything shows as successful or up",
+        "operationId" : "healthcheck",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Health check passed"
+          },
+          "500" : {
+            "description" : "Error Occured. Contact bob@sourcedigital.net"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "BasicAuth" : {
+      "type" : "basic"
+    },
+    "ApiKeyAuth" : {
+      "type" : "apiKey",
+      "name" : "X-API-Key",
+      "in" : "header"
+    },
+    "OAuth2" : {
+      "type" : "oauth2",
+      "authorizationUrl" : "https://example.com/oauth/authorize",
+      "tokenUrl" : "https://example.com/oauth/token",
+      "flow" : "accessCode",
+      "scopes" : {
+        "write:mypredictions" : "submit my own next prediction",
+        "read:mypredictions" : "read my own predictions",
+        "write:playeruserdata" : "write user data other than my own (as an admin or producer)",
+        "read:playeruserdata" : "read user data other  (as an admin or producer)",
+        "write:myself" : "write to my own user record, including delete my user record",
+        "read:myself" : "read your own user record",
+        "write:events" : "write events for a game (as a producer)",
+        "read:events" : "read events for a game (as a producer)"
+      }
+    }
+  },
+  "definitions" : {
+    "Prediction" : {
+      "type" : "object",
+      "properties" : {
+        "predictionId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "driveId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "userId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "submittedAt" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "predictedOutcome" : {
+          "type" : "string",
+          "description" : "Predicted Outcome of Drive",
+          "enum" : [ "touchdown", "pass_td", "rush_td", "field_goal", "prediction_auth", "interception", "fumble", "missed_fg_or_blocked", "downs", "blocked_punt", "safety" ]
+        },
+        "coinValue" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "coinMultiplier" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "NextDriveOutcome" : {
+      "type" : "object",
+      "properties" : {
+        "predictedOutcome" : {
+          "type" : "string",
+          "description" : "Predicted Outcome of Drive",
+          "enum" : [ "touchdown", "pass_td", "rush_td", "field_goal", "prediction_auth", "interception", "fumble", "missed_fg_or_blocked", "downs", "blocked_punt", "safety" ]
+        }
+      }
+    },
+    "Registration" : {
+      "type" : "object",
+      "properties" : {
+        "username" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Credentials" : {
+      "type" : "object",
+      "properties" : {
+        "username" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        }
+      }
+    },
+    "User" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "username" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        },
+        "coinBalance" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "Coin Balance"
+        },
+        "favoriteSport" : {
+          "type" : "string",
+          "description" : "3 letter abbreviation of favorite sports league (e.g. NFL)"
+        },
+        "favoriteTeam" : {
+          "type" : "string",
+          "description" : "3 letter abbreviation of favorite sports team (e.g. ATL)"
+        }
+      }
+    },
+    "Profile" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "password" : {
+          "type" : "string"
+        },
+        "favoriteSport" : {
+          "type" : "string",
+          "description" : "3 letter abbreviation of favorite sports league (e.g. NFL)"
+        },
+        "favoriteTeam" : {
+          "type" : "string",
+          "description" : "3 letter abbreviation of favorite sports team (e.g. ATL)"
+        }
+      }
+    },
+    "Leaderboard" : {
+      "type" : "object",
+      "properties" : {
+        "leaderboardId" : {
+          "type" : "string"
+        },
+        "rank" : {
+          "type" : "string"
+        },
+        "userId" : {
+          "type" : "string"
+        },
+        "username" : {
+          "type" : "string"
+        },
+        "numberOfCorrectPredictionns" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "Game" : {
+      "type" : "object",
+      "properties" : {
+        "gameId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "startTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "location" : {
+          "type" : "string"
+        },
+        "homeTeam" : {
+          "type" : "string"
+        },
+        "awayTeam" : {
+          "type" : "string"
+        },
+        "homeTeamScore" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "awayTeamScore" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "canJoin" : {
+          "type" : "boolean"
+        },
+        "inProgress" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "Drive" : {
+      "type" : "object",
+      "properties" : {
+        "driveId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "gameId" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "teamInPossession" : {
+          "type" : "string",
+          "description" : "3 letter abbreviation of team in possession"
+        },
+        "startTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "startQuadrant" : {
+          "type" : "string",
+          "enum" : [ "1", "2", "3", "4" ]
+        },
+        "endTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "canPredictNow" : {
+          "type" : "boolean"
+        },
+        "outcome" : {
+          "type" : "string",
+          "description" : "Actual Outcome of Drive",
+          "enum" : [ "touchdown", "pass_td", "rush_td", "field_goal", "prediction_auth", "interception", "fumble", "missed_fg_or_blocked", "downs", "blocked_punt", "safety" ]
+        }
+      }
+    },
+    "Event" : {
+      "type" : "object",
+      "properties" : {
+        "eventId" : {
+          "type" : "string"
+        },
+        "gameId" : {
+          "type" : "string"
+        },
+        "driveId" : {
+          "type" : "string"
+        },
+        "eventType" : {
+          "type" : "string",
+          "enum" : [ "change_in_possession", "open_predictions", "close_predictions", "drive_outcome" ]
+        },
+        "teamInPossession" : {
+          "type" : "string",
+          "description" : "3 letter abbreviation of team in possession"
+        },
+        "startQuadrant" : {
+          "type" : "string",
+          "enum" : [ "1", "2", "3", "4" ]
+        },
+        "endTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "outcome" : {
+          "type" : "string",
+          "description" : "Actual Outcome of Drive",
+          "enum" : [ "touchdown", "pass_td", "rush_td", "field_goal", "prediction_auth", "interception", "fumble", "missed_fg_or_blocked", "downs", "blocked_punt", "safety" ]
+        },
+        "isPredictionWindowOpen" : {
+          "type" : "boolean",
+          "description" : "If true, a User may currently submit a Prediction for the outcome of this Drive"
+        }
+      }
+    },
+    "OpenPredictionEvent" : {
+      "type" : "object",
+      "properties" : {
+        "gameId" : {
+          "type" : "string",
+          "description" : "Game for which prediction window is open"
+        },
+        "teamInPossession" : {
+          "type" : "string",
+          "description" : "3 letter abbreviation of team in possession"
+        },
+        "startQuadrant" : {
+          "type" : "string",
+          "enum" : [ "1", "2", "3", "4" ]
+        }
+      }
+    },
+    "ClosePredictionEvent" : {
+      "type" : "object",
+      "properties" : {
+        "gameId" : {
+          "type" : "string",
+          "description" : "Game for which prediction window is closed"
+        }
+      }
+    },
+    "OutcomeEvent" : {
+      "type" : "object",
+      "properties" : {
+        "gameId" : {
+          "type" : "string",
+          "description" : "Game for which outcome is being reported"
+        },
+        "outcome" : {
+          "type" : "string",
+          "description" : "Actual Outcome of Drive",
+          "enum" : [ "touchdown", "pass_td", "rush_td", "field_goal", "prediction_auth", "interception", "fumble", "missed_fg_or_blocked", "downs", "blocked_punt", "safety" ]
+        }
+      }
+    },
+    "ErrorMessage" : {
+      "type" : "object",
+      "properties" : {
+        "errorMessage" : {
+          "type" : "string"
+        }
+      }
+    },
+    "BearerToken" : {
+      "type" : "object",
+      "properties" : {
+        "jwt" : {
+          "type" : "string",
+          "description" : "JWT for the User. Provide it in future request Authorization header with Bearer scheme"
+        }
+      }
+    }
+  }
+}

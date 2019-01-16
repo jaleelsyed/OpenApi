@@ -1,0 +1,534 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "SyriaOHR API",
+    "version" : "1.0.0",
+    "title" : "SyriaOHR API"
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/omaremadeldin/syriaohr/1.0.0",
+  "schemes" : [ "https", "http" ],
+  "paths" : {
+    "/home" : {
+      "get" : {
+        "summary" : "Home screen content",
+        "description" : "lists top news, latest news and latest media with a constant number of items that will probably will be dictated by the design\n",
+        "operationId" : "home",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "language",
+          "in" : "query",
+          "description" : "language identifier (en or ar)",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "home screen news and media lists",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "error_code" : {
+                  "type" : "integer",
+                  "example" : 0
+                },
+                "top_news" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/definitions/NewsArticle"
+                  }
+                },
+                "latest_news" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/definitions/NewsArticle"
+                  }
+                },
+                "latest_media" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/definitions/Media"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid language identifier or unsupported language",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "error_code" : {
+                  "type" : "integer",
+                  "example" : 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories" : {
+      "get" : {
+        "summary" : "gets all categories",
+        "description" : "list all categories",
+        "operationId" : "listCategories",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "language",
+          "in" : "query",
+          "description" : "language identifier (en or ar)",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "a list of categories",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "error_code" : {
+                  "type" : "integer",
+                  "example" : 0
+                },
+                "categories" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/definitions/Category"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid language identifier or unsupported language",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "error_code" : {
+                  "type" : "integer",
+                  "example" : 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/news" : {
+      "get" : {
+        "summary" : "gets list of news",
+        "operationId" : "listNews",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "language",
+          "in" : "query",
+          "description" : "language identifier (en or ar)",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "page number (starts from 1)",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "page_size",
+          "in" : "query",
+          "description" : "page size (defaults to 10, with a maximum of 20)",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "name" : "search",
+          "in" : "query",
+          "description" : "an optional search query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "category_id",
+          "in" : "query",
+          "description" : "an optional category filter",
+          "required" : false,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "a list of news articles",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "error_code" : {
+                  "type" : "integer",
+                  "example" : 0
+                },
+                "total_count" : {
+                  "type" : "integer",
+                  "example" : 300
+                },
+                "data" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/definitions/NewsArticle"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid language identifier or unsupported language",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "error_code" : {
+                  "type" : "integer",
+                  "example" : 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/media" : {
+      "get" : {
+        "summary" : "gets list of media",
+        "operationId" : "listMedia",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "language",
+          "in" : "query",
+          "description" : "language identifier (en or ar)",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "page number (starts from 1)",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "page_size",
+          "in" : "query",
+          "description" : "page size (defaults to 10, with a maximum of 20)",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "name" : "search",
+          "in" : "query",
+          "description" : "an optional search query",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "category_id",
+          "in" : "query",
+          "description" : "an optional category filter",
+          "required" : false,
+          "type" : "integer"
+        }, {
+          "name" : "is_video",
+          "in" : "query",
+          "description" : "filter to videos only or photos only",
+          "required" : false,
+          "type" : "boolean"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "a list of media",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "error_code" : {
+                  "type" : "integer",
+                  "example" : 0
+                },
+                "total_count" : {
+                  "type" : "integer",
+                  "example" : 150
+                },
+                "data" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/definitions/Media"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid language identifier or unsupported language",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "error_code" : {
+                  "type" : "integer",
+                  "example" : 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/news/{id}" : {
+      "get" : {
+        "summary" : "gets the details of a specific news article",
+        "operationId" : "getNewsDetail",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "news article id",
+          "required" : true,
+          "type" : "integer"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "a detailed news article",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "error_code" : {
+                  "type" : "integer",
+                  "example" : 0
+                },
+                "article" : {
+                  "$ref" : "#/definitions/NewsArticleDetail"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "News article not found or invalid",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "error_code" : {
+                  "type" : "integer",
+                  "example" : 2
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "NewsArticle" : {
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "example" : 5123
+        },
+        "title" : {
+          "type" : "string",
+          "example" : "Fighting between the major factions reaches Al-Atarib through a violent attack by Hayyaat Tahrir Al-Sham on the largest city in the western sector of the province in order to impose its control over the city"
+        },
+        "date" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2016-08-29T09:12:33.001Z"
+        },
+        "thumbnail_url" : {
+          "type" : "string",
+          "format" : "url",
+          "example" : "wp-content/uploads/2014/10/2343446910715809_1538282319721172_1269551092_n-150x150.jpg"
+        },
+        "categories" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Category"
+          }
+        }
+      }
+    },
+    "NewsArticleDetail" : {
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "example" : 5123
+        },
+        "title" : {
+          "type" : "string",
+          "example" : "Fighting between the major factions reaches Al-Atarib through a violent attack by Hayyaat Tahrir Al-Sham on the largest city in the western sector of the province in order to impose its control over the city"
+        },
+        "content" : {
+          "type" : "string",
+          "example" : "A complete crime, a mass massacre, a field execution..."
+        },
+        "date" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2016-08-29T09:12:33.001Z"
+        },
+        "thumbnail_url" : {
+          "type" : "string",
+          "format" : "url",
+          "example" : "wp-content/uploads/2014/10/2343446910715809_1538282319721172_1269551092_n-150x150.jpg"
+        },
+        "categories" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Category"
+          }
+        },
+        "attachments" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Media"
+          }
+        }
+      }
+    },
+    "Media" : {
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "example" : 1994
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "نازحين - دير الزور"
+        },
+        "is_video" : {
+          "type" : "boolean",
+          "example" : false
+        },
+        "date" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2016-08-29T09:12:33.001Z"
+        },
+        "thumbnail_url" : {
+          "type" : "string",
+          "format" : "url",
+          "example" : "wp-content/uploads/2014/10/2343446910715809_1538282319721172_1269551092_n-150x150.jpg"
+        },
+        "url" : {
+          "type" : "string",
+          "format" : "url",
+          "example" : "wp-content/uploads/2019/01/نازحين-دير-الزور-1.jpeg"
+        }
+      }
+    },
+    "Category" : {
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "example" : 5
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Breaking News"
+        },
+        "parent_id" : {
+          "type" : "integer",
+          "example" : "3 | null"
+        }
+      }
+    },
+    "inline_response_200" : {
+      "properties" : {
+        "error_code" : {
+          "type" : "integer",
+          "example" : 0
+        },
+        "top_news" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/NewsArticle"
+          }
+        },
+        "latest_news" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/NewsArticle"
+          }
+        },
+        "latest_media" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Media"
+          }
+        }
+      }
+    },
+    "inline_response_400" : {
+      "properties" : {
+        "error_code" : {
+          "type" : "integer",
+          "example" : 1
+        }
+      }
+    },
+    "inline_response_200_1" : {
+      "properties" : {
+        "error_code" : {
+          "type" : "integer",
+          "example" : 0
+        },
+        "categories" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Category"
+          }
+        }
+      }
+    },
+    "inline_response_200_2" : {
+      "properties" : {
+        "error_code" : {
+          "type" : "integer",
+          "example" : 0
+        },
+        "total_count" : {
+          "type" : "integer",
+          "example" : 300
+        },
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/NewsArticle"
+          }
+        }
+      }
+    },
+    "inline_response_200_3" : {
+      "properties" : {
+        "error_code" : {
+          "type" : "integer",
+          "example" : 0
+        },
+        "total_count" : {
+          "type" : "integer",
+          "example" : 150
+        },
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Media"
+          }
+        }
+      }
+    },
+    "inline_response_200_4" : {
+      "properties" : {
+        "error_code" : {
+          "type" : "integer",
+          "example" : 0
+        },
+        "article" : {
+          "$ref" : "#/definitions/NewsArticleDetail"
+        }
+      }
+    },
+    "inline_response_404" : {
+      "properties" : {
+        "error_code" : {
+          "type" : "integer",
+          "example" : 2
+        }
+      }
+    }
+  }
+}
